@@ -3,139 +3,569 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Barbearia Rodrigues</title>
+<title>Barbearia Rodrigues | Irecê-BA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#0d0d0d;color:#fff}
-header{background:#000;padding:18px 8%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
-.logo{font-size:24px;font-weight:bold;color:#d4a23a}
-nav a{color:#fff;text-decoration:none;margin-left:18px;font-size:15px}
-nav a:hover{color:#d4a23a}
-.menu{display:none;background:none;border:none;color:#fff;font-size:28px}
+:root{
+  --ouro:#c9972c;
+  --ouro-claro:#e8b84b;
+  --preto:#080808;
+  --cinza-escuro:#111111;
+  --cinza-medio:#1c1c1c;
+  --cinza-card:#161616;
+  --texto:#e8e4dc;
+  --texto-suave:#9a9080;
+  --borda:#2a2520;
+}
 
+*{margin:0;padding:0;box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--preto);
+  color:var(--texto);
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+
+/* ── HEADER ── */
+header{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  padding:22px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  transition:background .4s, padding .4s;
+}
+header.scrolled{
+  background:rgba(8,8,8,.96);
+  border-bottom:1px solid var(--borda);
+  padding:14px 7%;
+}
+
+.logo-wrap{display:flex;align-items:center;gap:12px}
+.logo-icon{
+  width:38px;height:38px;
+  border:1.5px solid var(--ouro);
+  border-radius:50%;
+  display:grid;place-items:center;
+  font-size:16px;color:var(--ouro);
+}
+.logo-text{
+  font-family:'Playfair Display',serif;
+  font-size:20px;
+  letter-spacing:.04em;
+  color:#fff;
+}
+.logo-text span{color:var(--ouro)}
+
+nav{display:flex;gap:32px;align-items:center}
+nav a{
+  color:var(--texto-suave);
+  text-decoration:none;
+  font-size:13px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  transition:color .2s;
+}
+nav a:hover{color:var(--ouro)}
+
+.btn-nav{
+  background:transparent;
+  border:1.5px solid var(--ouro);
+  color:var(--ouro);
+  padding:9px 20px;
+  border-radius:3px;
+  text-decoration:none;
+  font-size:12px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  font-weight:500;
+  transition:background .2s,color .2s;
+}
+.btn-nav:hover{background:var(--ouro);color:#000}
+
+.hamburguer{display:none;background:none;border:none;cursor:pointer;padding:4px}
+.hamburguer span{display:block;width:22px;height:1.5px;background:var(--texto);margin:5px 0;transition:.3s}
+.hamburguer.ativo span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburguer.ativo span:nth-child(2){opacity:0}
+.hamburguer.ativo span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* ── HERO ── */
 .hero{
-min-height:85vh;
-background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.85)),url("https://i.imgur.com/8zeXZrm.jpeg");
-background-size:cover;
-background-position:center;
-display:flex;
-align-items:center;
-padding:0 8%;
+  min-height:100vh;
+  position:relative;
+  display:flex;
+  align-items:center;
+  padding:0 7%;
+  overflow:hidden;
 }
 
-.hero div{max-width:620px}
-.hero h1{font-size:48px;color:#fff;margin-bottom:15px}
-.hero span{color:#d4a23a}
-.hero p{font-size:19px;color:#ddd;margin-bottom:25px;line-height:1.5}
+.hero-bg{
+  position:absolute;inset:0;
+  background:url('https://i.imgur.com/8zeXZrm.jpeg') center/cover no-repeat;
+  filter:brightness(.22) saturate(.6);
+  transform:scale(1.04);
+  transition:transform 12s ease;
+}
+.hero-bg.loaded{transform:scale(1)}
 
-.btn{
-background:#d4a23a;
-color:#000;
-padding:15px 25px;
-border-radius:6px;
-text-decoration:none;
-font-weight:bold;
-display:inline-block;
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(105deg,rgba(8,8,8,.92) 45%,rgba(8,8,8,.4) 100%);
 }
 
-section{padding:60px 8%}
-.title{text-align:center;margin-bottom:35px}
-.title h2{font-size:32px;color:#d4a23a}
-.title p{color:#ccc;margin-top:8px}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:22px;
+.hero-content{
+  position:relative;
+  z-index:1;
+  max-width:680px;
 }
 
-.card{
-background:#1a1a1a;
-border:1px solid #333;
-border-radius:12px;
-padding:25px;
-text-align:center;
+.hero-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--ouro);
+  margin-bottom:28px;
+}
+.hero-eyebrow::before{
+  content:'';
+  display:block;
+  width:28px;height:1px;
+  background:var(--ouro);
 }
 
-.card h3{color:#d4a23a;margin-bottom:10px}
-.card p{color:#ccc;line-height:1.5}
-
-.about{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:35px;
-align-items:center;
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(44px,6vw,78px);
+  font-weight:900;
+  line-height:1.08;
+  color:#fff;
+  margin-bottom:24px;
+  letter-spacing:-.01em;
+}
+.hero h1 em{
+  font-style:italic;
+  color:var(--ouro-claro);
 }
 
-.about img{width:100%;border-radius:12px}
-.about p{color:#ddd;font-size:17px;line-height:1.7}
-
-.gallery{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:18px;
+.hero p{
+  font-size:17px;
+  color:var(--texto-suave);
+  line-height:1.7;
+  margin-bottom:40px;
+  max-width:480px;
 }
 
-.gallery img{
-width:100%;
-height:300px;
-object-fit:cover;
-border-radius:12px;
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+
+.btn-primario{
+  background:var(--ouro);
+  color:#000;
+  padding:16px 32px;
+  border-radius:3px;
+  text-decoration:none;
+  font-weight:600;
+  font-size:13px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  transition:background .2s,transform .15s;
+  display:inline-block;
+}
+.btn-primario:hover{background:var(--ouro-claro);transform:translateY(-1px)}
+
+.btn-secundario{
+  background:transparent;
+  border:1px solid rgba(255,255,255,.25);
+  color:#fff;
+  padding:16px 32px;
+  border-radius:3px;
+  text-decoration:none;
+  font-size:13px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  transition:border-color .2s,color .2s;
+  display:inline-block;
+}
+.btn-secundario:hover{border-color:var(--ouro);color:var(--ouro)}
+
+.hero-stats{
+  position:absolute;
+  bottom:48px;right:7%;
+  z-index:1;
+  display:flex;
+  gap:48px;
+}
+.stat{text-align:right}
+.stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:36px;
+  font-weight:700;
+  color:var(--ouro);
+  line-height:1;
+}
+.stat-label{
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--texto-suave);
+  margin-top:4px;
 }
 
-.info{background:#000;text-align:center}
-.info p{margin:12px 0;color:#ddd;font-size:17px}
+/* ── SEÇÕES ── */
+section{padding:90px 7%}
 
+.sec-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ouro);
+  margin-bottom:14px;
+}
+.sec-eyebrow::before{content:'';display:block;width:22px;height:1px;background:var(--ouro)}
+
+.sec-titulo{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,4vw,46px);
+  color:#fff;
+  line-height:1.15;
+  margin-bottom:12px;
+}
+
+.sec-sub{
+  color:var(--texto-suave);
+  font-size:16px;
+  line-height:1.6;
+  max-width:520px;
+}
+
+/* ── SERVIÇOS ── */
+#servicos .sec-head{margin-bottom:52px}
+
+.servicos-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1px;
+  border:1px solid var(--borda);
+  border-radius:8px;
+  overflow:hidden;
+}
+
+.servico-card{
+  background:var(--cinza-card);
+  padding:36px 30px;
+  transition:background .2s;
+  position:relative;
+}
+.servico-card:hover{background:var(--cinza-medio)}
+
+.servico-num{
+  font-family:'Playfair Display',serif;
+  font-size:11px;
+  letter-spacing:.18em;
+  color:var(--ouro);
+  margin-bottom:20px;
+  opacity:.7;
+}
+
+.servico-card h3{
+  font-size:20px;
+  font-weight:500;
+  color:#fff;
+  margin-bottom:12px;
+  letter-spacing:.02em;
+}
+
+.servico-card p{
+  color:var(--texto-suave);
+  font-size:14px;
+  line-height:1.65;
+}
+
+.servico-card .preco{
+  margin-top:20px;
+  font-size:13px;
+  color:var(--ouro);
+  font-weight:500;
+  letter-spacing:.06em;
+}
+
+/* ── SOBRE ── */
+#sobre{
+  background:var(--cinza-escuro);
+  border-top:1px solid var(--borda);
+  border-bottom:1px solid var(--borda);
+}
+
+.sobre-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:70px;
+  align-items:center;
+}
+
+.sobre-img-wrap{
+  position:relative;
+}
+.sobre-img-wrap img{
+  width:100%;
+  height:480px;
+  object-fit:cover;
+  border-radius:6px;
+  display:block;
+}
+.sobre-img-badge{
+  position:absolute;
+  bottom:-18px;right:-18px;
+  background:var(--ouro);
+  color:#000;
+  width:100px;height:100px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  font-weight:700;
+  font-size:13px;
+  line-height:1.2;
+  letter-spacing:.02em;
+}
+
+.sobre-texto p{
+  color:var(--texto-suave);
+  font-size:16px;
+  line-height:1.8;
+  margin-bottom:20px;
+}
+.sobre-texto p strong{color:var(--texto);font-weight:500}
+
+.diferenciais{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-top:36px;
+}
+.diferencial{
+  border-left:2px solid var(--ouro);
+  padding-left:14px;
+}
+.diferencial h4{
+  font-size:14px;
+  font-weight:600;
+  color:#fff;
+  margin-bottom:4px;
+}
+.diferencial p{
+  font-size:13px;
+  color:var(--texto-suave);
+  margin:0;
+}
+
+/* ── GALERIA ── */
+.galeria-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:260px 260px;
+  gap:10px;
+}
+.galeria-item{overflow:hidden;border-radius:6px}
+.galeria-item img{
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:transform .5s ease;
+  display:block;
+}
+.galeria-item:hover img{transform:scale(1.06)}
+.galeria-item:first-child{grid-column:span 2;grid-row:span 2}
+
+/* ── HORÁRIOS / CONTATO ── */
+#contato{
+  background:var(--cinza-escuro);
+  border-top:1px solid var(--borda);
+}
+
+.contato-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:start;
+  margin-top:48px;
+}
+
+.contato-info-item{
+  display:flex;
+  gap:16px;
+  margin-bottom:28px;
+  align-items:flex-start;
+}
+.contato-icone{
+  width:40px;height:40px;
+  border:1px solid var(--borda);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-size:17px;
+  flex-shrink:0;
+}
+.contato-info-item h4{
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ouro);
+  margin-bottom:5px;
+}
+.contato-info-item p{
+  font-size:15px;
+  color:var(--texto-suave);
+  line-height:1.5;
+}
+
+.contato-cta{
+  background:var(--cinza-card);
+  border:1px solid var(--borda);
+  border-radius:8px;
+  padding:40px 36px;
+}
+.contato-cta h3{
+  font-family:'Playfair Display',serif;
+  font-size:26px;
+  color:#fff;
+  margin-bottom:12px;
+}
+.contato-cta p{
+  font-size:15px;
+  color:var(--texto-suave);
+  line-height:1.6;
+  margin-bottom:28px;
+}
+.contato-cta .btn-primario{width:100%;text-align:center;padding:18px}
+
+/* ── FOOTER ── */
 footer{
-background:#070707;
-text-align:center;
-padding:18px;
-color:#888;
-font-size:14px;
+  background:var(--preto);
+  border-top:1px solid var(--borda);
+  padding:32px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+footer p{
+  font-size:13px;
+  color:var(--texto-suave);
+}
+.footer-logo{
+  font-family:'Playfair Display',serif;
+  font-size:18px;
+  color:var(--ouro);
+  letter-spacing:.04em;
 }
 
-.whats{
-position:fixed;
-right:18px;
-bottom:18px;
-background:#25d366;
-color:#fff;
-padding:15px 20px;
-border-radius:50px;
-text-decoration:none;
-font-weight:bold;
-box-shadow:0 0 15px rgba(0,0,0,.5);
-z-index:100;
+/* ── WHATSAPP FLUTUANTE ── */
+.whats-fab{
+  position:fixed;
+  right:22px;bottom:22px;
+  z-index:200;
+  background:#25d366;
+  color:#fff;
+  width:58px;height:58px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  text-decoration:none;
+  box-shadow:0 4px 24px rgba(37,211,102,.4);
+  font-size:26px;
+  transition:transform .2s,box-shadow .2s;
+}
+.whats-fab:hover{transform:scale(1.1);box-shadow:0 6px 32px rgba(37,211,102,.55)}
+
+/* ── LINHA DIVISÓRIA ── */
+.divider{
+  border:none;
+  border-top:1px solid var(--borda);
+  margin:0;
+}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  .sobre-grid{grid-template-columns:1fr;gap:36px}
+  .sobre-img-badge{width:80px;height:80px;font-size:11px;bottom:-14px;right:-8px}
+  .galeria-grid{
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:auto;
+  }
+  .galeria-item:first-child{grid-column:span 2;grid-row:span 1}
+  .contato-grid{grid-template-columns:1fr;gap:40px}
+  .hero-stats{display:none}
+  footer{flex-direction:column;gap:12px;text-align:center}
 }
 
 @media(max-width:768px){
-nav{
-display:none;
-position:absolute;
-top:65px;
-left:0;
-background:#000;
-width:100%;
-padding:20px;
-text-align:center;
+  header nav{
+    display:none;
+    position:fixed;
+    top:0;left:0;right:0;bottom:0;
+    background:rgba(8,8,8,.98);
+    flex-direction:column;
+    justify-content:center;
+    gap:32px;
+    z-index:99;
+  }
+  header nav.ativo{display:flex}
+  header nav a{font-size:18px;letter-spacing:.15em}
+  .btn-nav{display:none}
+  .hamburguer{display:block;z-index:101;position:relative}
+  section{padding:70px 5%}
+  header{padding:18px 5%}
+  .diferenciais{grid-template-columns:1fr}
 }
 
-nav.active{display:block}
-nav a{display:block;margin:15px 0}
-.menu{display:block}
-.hero h1{font-size:36px}
-.about{grid-template-columns:1fr}
+@media(max-width:480px){
+  .galeria-grid{grid-template-columns:1fr}
+  .galeria-item:first-child{grid-column:span 1}
+  .galeria-item{height:220px}
+  .hero-actions{flex-direction:column}
+  .btn-primario,.btn-secundario{text-align:center}
+  .servicos-grid{grid-template-columns:1fr}
+}
+
+/* ── ANIMAÇÕES SUAVES ── */
+.fade-in{
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .65s ease, transform .65s ease;
+}
+.fade-in.visivel{opacity:1;transform:translateY(0)}
+
+@media(prefers-reduced-motion:reduce){
+  .fade-in{opacity:1;transform:none;transition:none}
+  .hero-bg{transition:none}
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">Barbearia Rodrigues</div>
+<!-- HEADER -->
+<header id="header">
+  <div class="logo-wrap">
+    <div class="logo-icone" style="width:36px;height:36px;border:1.5px solid var(--ouro);border-radius:50%;display:grid;place-items:center;color:var(--ouro);font-size:15px;">✂</div>
+    <span class="logo-text">Barbearia <span>Rodrigues</span></span>
+  </div>
 
-  <button class="menu" onclick="abrirMenu()">☰</button>
+  <button class="hamburguer" id="hamburguer" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 
   <nav id="nav">
     <a href="#inicio">Início</a>
@@ -143,131 +573,235 @@ nav a{display:block;margin:15px 0}
     <a href="#sobre">Sobre</a>
     <a href="#galeria">Galeria</a>
     <a href="#contato">Contato</a>
+    <a class="btn-nav" href="https://w.app/qyhjzt" target="_blank">Agendar agora</a>
   </nav>
 </header>
 
+<!-- HERO -->
 <section class="hero" id="inicio">
-  <div>
-    <h1>Seu visual no <span>próximo nível</span></h1>
-    <p>Na Barbearia Rodrigues você encontra corte, barba e atendimento de qualidade em Irecê-BA.</p>
-    <a class="btn" href="https://w.app/qyhjzt" target="_blank">Agendar pelo WhatsApp</a>
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Barbearia Rodrigues — Irecê-BA</div>
+    <h1>Estilo que <em>fala</em><br>por você</h1>
+    <p>Corte, barba e atendimento de primeira — para quem leva o visual a sério.</p>
+    <div class="hero-actions">
+      <a class="btn-primario" href="https://w.app/qyhjzt" target="_blank">Agendar pelo WhatsApp</a>
+      <a class="btn-secundario" href="#servicos">Ver serviços</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">10k+</div>
+      <div class="stat-label">Clientes atendidos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">7h</div>
+      <div class="stat-label">Dias na semana</div>
+    </div>
   </div>
 </section>
 
+<hr class="divider">
+
+<!-- SERVIÇOS -->
 <section id="servicos">
-  <div class="title">
-    <h2>Nossos Serviços</h2>
-    <p>Atendimento profissional para deixar seu estilo alinhado.</p>
+  <div class="sec-head fade-in">
+    <div class="sec-eyebrow">O que fazemos</div>
+    <h2 class="sec-titulo">Nossos Serviços</h2>
+    <p class="sec-sub">Do corte à barba, cada detalhe pensado para você sair do jeito que gosta.</p>
   </div>
 
-  <div class="grid">
-    <div class="card">
+  <div class="servicos-grid fade-in">
+    <div class="servico-card">
+      <div class="servico-num">01</div>
       <h3>Corte Masculino</h3>
-      <p>Cortes modernos, social, degradê e estilos personalizados.</p>
+      <p>Cortes modernos, social, degradê e estilos personalizados. O corte que combina com você.</p>
     </div>
-
-    <div class="card">
+    <div class="servico-card">
+      <div class="servico-num">02</div>
       <h3>Barba</h3>
-      <p>Acabamento alinhado, modelagem e finalização na navalha.</p>
+      <p>Acabamento alinhado, modelagem precisa e finalização na navalha. Barba feita do jeito certo.</p>
     </div>
-
-    <div class="card">
+    <div class="servico-card">
+      <div class="servico-num">03</div>
       <h3>Sobrancelha</h3>
-      <p>Design masculino para complementar seu visual.</p>
+      <p>Design masculino para complementar seu visual e dar o acabamento que falta.</p>
     </div>
-
-    <div class="card">
+    <div class="servico-card">
+      <div class="servico-num">04</div>
       <h3>Combo Completo</h3>
-      <p>Corte, barba e acabamento para sair pronto.</p>
+      <p>Corte, barba e acabamento para sair completo — do cabelo à barba, tudo alinhado.</p>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="title">
-    <h2>Por que escolher a gente?</h2>
-  </div>
+<hr class="divider">
 
-  <div class="grid">
-    <div class="card">
-      <h3>+10 mil</h3>
-      <p>Clientes atendidos com dedicação e qualidade.</p>
-    </div>
-
-    <div class="card">
-      <h3>Horário amplo</h3>
-      <p>Segunda a sábado, das 08:00h às 20:00h.</p>
-    </div>
-
-    <div class="card">
-      <h3>Localização fácil</h3>
-      <p>Av. Tertuliano Cambuí, 180 - Irecê-BA.</p>
-    </div>
-  </div>
-</section>
-
+<!-- SOBRE -->
 <section id="sobre">
-  <div class="title">
-    <h2>Sobre a Barbearia Rodrigues</h2>
-  </div>
+  <div class="sobre-grid">
+    <div class="sobre-img-wrap fade-in">
+      <img src="https://i.imgur.com/K1OHtMp.jpeg" alt="Barbearia Rodrigues — ambiente">
+      <div class="sobre-img-badge">+10 mil clientes</div>
+    </div>
 
-  <div class="about">
-    <img src="https://i.imgur.com/K1OHtMp.jpeg" alt="Barbearia Rodrigues">
+    <div class="sobre-texto fade-in">
+      <div class="sec-eyebrow">Quem somos</div>
+      <h2 class="sec-titulo">Barbearia Rodrigues</h2>
+      <p>Referência em atendimento masculino em Irecê-BA, <strong>a Barbearia Rodrigues existe para deixar você com a autoestima lá em cima</strong> — com profissionais que sabem o que fazem e ambiente que faz você querer voltar.</p>
+      <p>Mais de 10 mil clientes atendidos e a mesma dedicação desde o primeiro dia.</p>
 
-    <p>
-      A Barbearia Rodrigues é referência em atendimento masculino em Irecê-BA.
-      Com mais de 10 mil clientes atendidos, oferecemos cortes modernos,
-      barba bem feita e um ambiente preparado para quem valoriza estilo,
-      cuidado e bom atendimento.
-    </p>
+      <div class="diferenciais">
+        <div class="diferencial">
+          <h4>Profissionais experientes</h4>
+          <p>Equipe treinada e atualizada nas tendências</p>
+        </div>
+        <div class="diferencial">
+          <h4>Ambiente confortável</h4>
+          <p>Espaço pensado para a sua experiência</p>
+        </div>
+        <div class="diferencial">
+          <h4>Atendimento personalizado</h4>
+          <p>Cada cliente tem um estilo diferente</p>
+        </div>
+        <div class="diferencial">
+          <h4>Agenda fácil</h4>
+          <p>Agendamento rápido pelo WhatsApp</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
+<hr class="divider">
+
+<!-- GALERIA -->
 <section id="galeria">
-  <div class="title">
-    <h2>Galeria</h2>
-    <p>Confira um pouco do nosso trabalho.</p>
+  <div class="sec-head fade-in" style="margin-bottom:40px">
+    <div class="sec-eyebrow">Galeria</div>
+    <h2 class="sec-titulo">Nosso trabalho</h2>
+    <p class="sec-sub">Um pouco do que fazemos por aqui, dia a dia.</p>
   </div>
 
-  <div class="gallery">
-    <img src="https://i.imgur.com/8zeXZrm.jpeg" alt="Corte Barbearia Rodrigues">
-    <img src="https://i.imgur.com/K1OHtMp.jpeg" alt="Cliente Barbearia Rodrigues">
-    <img src="https://i.imgur.com/fWD66yE.jpeg" alt="Barbearia Rodrigues">
-    <img src="https://i.imgur.com/FWqEbV3.jpeg" alt="Barbearia Rodrigues">
+  <div class="galeria-grid fade-in">
+    <div class="galeria-item">
+      <img src="https://i.imgur.com/8zeXZrm.jpeg" alt="Barbearia Rodrigues">
+    </div>
+    <div class="galeria-item">
+      <img src="https://i.imgur.com/K1OHtMp.jpeg" alt="Barbearia Rodrigues">
+    </div>
+    <div class="galeria-item">
+      <img src="https://i.imgur.com/fWD66yE.jpeg" alt="Barbearia Rodrigues">
+    </div>
+    <div class="galeria-item">
+      <img src="https://i.imgur.com/FWqEbV3.jpeg" alt="Barbearia Rodrigues">
+    </div>
   </div>
 </section>
 
-<section class="info" id="contato">
-  <div class="title">
-    <h2>Agende seu horário</h2>
-    <p>Fale conosco pelo WhatsApp ou venha até a barbearia.</p>
+<hr class="divider">
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="sec-head fade-in">
+    <div class="sec-eyebrow">Agende agora</div>
+    <h2 class="sec-titulo">Venha nos visitar</h2>
+    <p class="sec-sub">É rápido, fácil e sem enrolação. Fale pelo WhatsApp ou apareça por aqui.</p>
   </div>
 
-  <p>📍 Av. Tertuliano Cambuí, 180 - Irecê-BA</p>
-  <p>⏰ Segunda a sábado, das 08:00h às 20:00h</p>
-  <p>📲 Instagram: @barbearia_rodrigues</p>
+  <div class="contato-grid">
+    <div class="fade-in">
+      <div class="contato-info-item">
+        <div class="contato-icone">📍</div>
+        <div>
+          <h4>Endereço</h4>
+          <p>Av. Tertuliano Cambuí, 180<br>Irecê-BA</p>
+        </div>
+      </div>
+      <div class="contato-info-item">
+        <div class="contato-icone">⏰</div>
+        <div>
+          <h4>Horário de funcionamento</h4>
+          <p>Segunda a sábado<br>das 08:00 às 20:00</p>
+        </div>
+      </div>
+      <div class="contato-info-item">
+        <div class="contato-icone">📸</div>
+        <div>
+          <h4>Instagram</h4>
+          <p>@barbearia_rodrigues</p>
+        </div>
+      </div>
+    </div>
 
-  <br>
-
-  <a class="btn" href="https://w.app/qyhjzt" target="_blank">Chamar no WhatsApp</a>
+    <div class="contato-cta fade-in">
+      <h3>Pronto para agendar?</h3>
+      <p>Manda uma mensagem no WhatsApp e garante seu horário. Demora menos de 1 minuto.</p>
+      <a class="btn-primario" href="https://w.app/qyhjzt" target="_blank">Chamar no WhatsApp agora</a>
+    </div>
+  </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  © 2026 Barbearia Rodrigues - Site profissional para agendamentos
+  <div class="footer-logo">Barbearia Rodrigues</div>
+  <p>© 2026 · Irecê-BA · Todos os direitos reservados</p>
 </footer>
 
-<a class="whats" href="https://w.app/qyhjzt" target="_blank">WhatsApp</a>
+<!-- WHATSAPP FAB -->
+<a class="whats-fab" href="https://w.app/qyhjzt" target="_blank" aria-label="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
 
 <script>
-function abrirMenu(){
-  document.getElementById("nav").classList.toggle("active");
-}
+// Header com scroll
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 60);
+});
 
-document.querySelectorAll("nav a").forEach(link=>{
-  link.addEventListener("click",()=>{
-    document.getElementById("nav").classList.remove("active");
+// Menu mobile
+const hamburguer = document.getElementById('hamburguer');
+const nav = document.getElementById('nav');
+function toggleMenu() {
+  hamburguer.classList.toggle('ativo');
+  nav.classList.toggle('ativo');
+  document.body.style.overflow = nav.classList.contains('ativo') ? 'hidden' : '';
+}
+nav.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburguer.classList.remove('ativo');
+    nav.classList.remove('ativo');
+    document.body.style.overflow = '';
   });
 });
+
+// Parallax suave do hero
+const heroBg = document.getElementById('heroBg');
+setTimeout(() => heroBg.classList.add('loaded'), 100);
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (y < window.innerHeight) {
+    heroBg.style.transform = `translateY(${y * 0.18}px) scale(1)`;
+  }
+}, {passive: true});
+
+// Fade-in ao fazer scroll
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visivel'), i * 80);
+      observer.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.12});
+fadeEls.forEach(el => observer.observe(el));
 </script>
 
 </body>
