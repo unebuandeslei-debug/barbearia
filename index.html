@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbearia Rodrigues</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0d0d0d;color:#fff}
+header{background:#000;padding:18px 8%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
+.logo{font-size:24px;font-weight:bold;color:#d4a23a}
+nav a{color:#fff;text-decoration:none;margin-left:18px;font-size:15px}
+nav a:hover{color:#d4a23a}
+.menu{display:none;background:none;border:none;color:#fff;font-size:28px}
+
+.hero{
+min-height:85vh;
+background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.85)),url("https://i.imgur.com/8zeXZrm.jpeg");
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+padding:0 8%;
+}
+
+.hero div{max-width:620px}
+.hero h1{font-size:48px;color:#fff;margin-bottom:15px}
+.hero span{color:#d4a23a}
+.hero p{font-size:19px;color:#ddd;margin-bottom:25px;line-height:1.5}
+
+.btn{
+background:#d4a23a;
+color:#000;
+padding:15px 25px;
+border-radius:6px;
+text-decoration:none;
+font-weight:bold;
+display:inline-block;
+}
+
+section{padding:60px 8%}
+.title{text-align:center;margin-bottom:35px}
+.title h2{font-size:32px;color:#d4a23a}
+.title p{color:#ccc;margin-top:8px}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:22px;
+}
+
+.card{
+background:#1a1a1a;
+border:1px solid #333;
+border-radius:12px;
+padding:25px;
+text-align:center;
+}
+
+.card h3{color:#d4a23a;margin-bottom:10px}
+.card p{color:#ccc;line-height:1.5}
+
+.about{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:35px;
+align-items:center;
+}
+
+.about img{width:100%;border-radius:12px}
+.about p{color:#ddd;font-size:17px;line-height:1.7}
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:18px;
+}
+
+.gallery img{
+width:100%;
+height:300px;
+object-fit:cover;
+border-radius:12px;
+}
+
+.info{background:#000;text-align:center}
+.info p{margin:12px 0;color:#ddd;font-size:17px}
+
+footer{
+background:#070707;
+text-align:center;
+padding:18px;
+color:#888;
+font-size:14px;
+}
+
+.whats{
+position:fixed;
+right:18px;
+bottom:18px;
+background:#25d366;
+color:#fff;
+padding:15px 20px;
+border-radius:50px;
+text-decoration:none;
+font-weight:bold;
+box-shadow:0 0 15px rgba(0,0,0,.5);
+z-index:100;
+}
+
+@media(max-width:768px){
+nav{
+display:none;
+position:absolute;
+top:65px;
+left:0;
+background:#000;
+width:100%;
+padding:20px;
+text-align:center;
+}
+
+nav.active{display:block}
+nav a{display:block;margin:15px 0}
+.menu{display:block}
+.hero h1{font-size:36px}
+.about{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Barbearia Rodrigues</div>
+
+  <button class="menu" onclick="abrirMenu()">☰</button>
+
+  <nav id="nav">
+    <a href="#inicio">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#galeria">Galeria</a>
+    <a href="#contato">Contato</a>
+  </nav>
+</header>
+
+<section class="hero" id="inicio">
+  <div>
+    <h1>Seu visual no <span>próximo nível</span></h1>
+    <p>Na Barbearia Rodrigues você encontra corte, barba e atendimento de qualidade em Irecê-BA.</p>
+    <a class="btn" href="https://w.app/qyhjzt" target="_blank">Agendar pelo WhatsApp</a>
+  </div>
+</section>
+
+<section id="servicos">
+  <div class="title">
+    <h2>Nossos Serviços</h2>
+    <p>Atendimento profissional para deixar seu estilo alinhado.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Corte Masculino</h3>
+      <p>Cortes modernos, social, degradê e estilos personalizados.</p>
+    </div>
+
+    <div class="card">
+      <h3>Barba</h3>
+      <p>Acabamento alinhado, modelagem e finalização na navalha.</p>
+    </div>
+
+    <div class="card">
+      <h3>Sobrancelha</h3>
+      <p>Design masculino para complementar seu visual.</p>
+    </div>
+
+    <div class="card">
+      <h3>Combo Completo</h3>
+      <p>Corte, barba e acabamento para sair pronto.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="title">
+    <h2>Por que escolher a gente?</h2>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>+10 mil</h3>
+      <p>Clientes atendidos com dedicação e qualidade.</p>
+    </div>
+
+    <div class="card">
+      <h3>Horário amplo</h3>
+      <p>Segunda a sábado, das 08:00h às 20:00h.</p>
+    </div>
+
+    <div class="card">
+      <h3>Localização fácil</h3>
+      <p>Av. Tertuliano Cambuí, 180 - Irecê-BA.</p>
+    </div>
+  </div>
+</section>
+
+<section id="sobre">
+  <div class="title">
+    <h2>Sobre a Barbearia Rodrigues</h2>
+  </div>
+
+  <div class="about">
+    <img src="https://i.imgur.com/K1OHtMp.jpeg" alt="Barbearia Rodrigues">
+
+    <p>
+      A Barbearia Rodrigues é referência em atendimento masculino em Irecê-BA.
+      Com mais de 10 mil clientes atendidos, oferecemos cortes modernos,
+      barba bem feita e um ambiente preparado para quem valoriza estilo,
+      cuidado e bom atendimento.
+    </p>
+  </div>
+</section>
+
+<section id="galeria">
+  <div class="title">
+    <h2>Galeria</h2>
+    <p>Confira um pouco do nosso trabalho.</p>
+  </div>
+
+  <div class="gallery">
+    <img src="https://i.imgur.com/8zeXZrm.jpeg" alt="Corte Barbearia Rodrigues">
+    <img src="https://i.imgur.com/K1OHtMp.jpeg" alt="Cliente Barbearia Rodrigues">
+    <img src="https://i.imgur.com/fWD66yE.jpeg" alt="Barbearia Rodrigues">
+    <img src="https://i.imgur.com/FWqEbV3.jpeg" alt="Barbearia Rodrigues">
+  </div>
+</section>
+
+<section class="info" id="contato">
+  <div class="title">
+    <h2>Agende seu horário</h2>
+    <p>Fale conosco pelo WhatsApp ou venha até a barbearia.</p>
+  </div>
+
+  <p>📍 Av. Tertuliano Cambuí, 180 - Irecê-BA</p>
+  <p>⏰ Segunda a sábado, das 08:00h às 20:00h</p>
+  <p>📲 Instagram: @barbearia_rodrigues</p>
+
+  <br>
+
+  <a class="btn" href="https://w.app/qyhjzt" target="_blank">Chamar no WhatsApp</a>
+</section>
+
+<footer>
+  © 2026 Barbearia Rodrigues - Site profissional para agendamentos
+</footer>
+
+<a class="whats" href="https://w.app/qyhjzt" target="_blank">WhatsApp</a>
+
+<script>
+function abrirMenu(){
+  document.getElementById("nav").classList.toggle("active");
+}
+
+document.querySelectorAll("nav a").forEach(link=>{
+  link.addEventListener("click",()=>{
+    document.getElementById("nav").classList.remove("active");
+  });
+});
+</script>
+
+</body>
+</html>
