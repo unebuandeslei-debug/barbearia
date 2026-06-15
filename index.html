@@ -539,6 +539,37 @@ footer p{
   .servicos-grid{grid-template-columns:1fr}
 }
 
+
+/* Ajuste para celular: mostra as fotos inteiras, sem cortar */
+@media(max-width:768px){
+  .sobre-img-wrap img{
+    height:auto;
+    object-fit:contain;
+  }
+
+  .galeria-grid{
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+
+  .galeria-item,
+  .galeria-item:first-child{
+    height:auto;
+    grid-column:span 1;
+    grid-row:span 1;
+  }
+
+  .galeria-item img{
+    height:auto;
+    object-fit:contain;
+    background:#000;
+  }
+
+  .hero-bg{
+    background-position:center top;
+  }
+}
+
 /* ── ANIMAÇÕES SUAVES ── */
 .fade-in{
   opacity:0;
